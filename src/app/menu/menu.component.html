@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <div class="language-picker">
+    <mat-form-field appearance="outline" class="field-language">
+      <mat-icon *ngIf="!currentLanguage">language</mat-icon>
+      <span *ngIf="currentLanguage" [ngClass]="'fi fi-' + currentLanguage"></span>
+      <mat-select>
+        <mat-option *ngFor="let language of languages" [value]="language" (click)="changeLanguage(language)">
+          <span [ngClass]="'fi fi-' + language"></span>
+          {{language + '_LANGUAGE' | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
