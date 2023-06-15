@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {catchError, forkJoin, of} from "rxjs";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
@@ -13,15 +12,32 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {MAT_RADIO_DEFAULT_OPTIONS, MatRadioModule} from "@angular/material/radio";
+import {MatRadioModule} from "@angular/material/radio";
 import {MatStepperModule} from "@angular/material/stepper";
 import { MatInputModule } from '@angular/material/input';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './menu/menu.component'
+
+import { SwiperModule } from 'swiper/angular'
+
+import { AngularFireModule } from '@angular/fire/compat';
+import {MatDialogModule} from "@angular/material/dialog";
+import { DialogComponent } from './dialog/dialog.component';
+import {MatCardModule} from "@angular/material/card";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
+import { AppRoutingModule } from './app-routing.module';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { OrderComponent } from './order/order.component';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    DialogComponent,
+    AdminPanelComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +55,8 @@ import { MenuComponent } from './menu/menu.component';
     ReactiveFormsModule,
     MatStepperModule,
     MatInputModule,
+    MatDialogModule,
+    SwiperModule,
     AngularFireModule.initializeApp({
       apiKey: "AIzaSyDpuvQITJ7KaQTYyjbsthvoFrAoIwB0reU",
       authDomain: "hookah-on-the-go.firebaseapp.com",
@@ -47,13 +65,18 @@ import { MenuComponent } from './menu/menu.component';
       messagingSenderId: "416245062470",
       appId: "1:416245062470:web:43fe1ea84f9334a1d76347",
       measurementId: "G-WEMEZTQV00",
-      databaseURL: 'https://color-palette-4da4e-default-rtdb.europe-west1.firebasedatabase.app'
+      databaseURL: 'https://hookah-on-the-go-default-rtdb.europe-west1.firebasedatabase.app'
     }),
+    MatCardModule,
+    AppRoutingModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule
   ],
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: initApp,
-    deps: [HttpClient, TranslateService],
+    deps: [HttpClient, TranslateService, AngularFireDatabase],
     multi: true
   }
   ],
@@ -62,33 +85,26 @@ import { MenuComponent } from './menu/menu.component';
 export class AppModule {
 }
 
-export function initApp(http: HttpClient, translate: TranslateService) {
+export function initApp(http: HttpClient, translate: TranslateService, dataBase: AngularFireDatabase) {
   return () => new Promise<boolean>((resolve: (res: boolean) => void) => {
 
-    const defaultLocale = 'en';
-    const translationsUrl = '/assets/i18n';
-    const sufix = '.json';
-    const storageLocale = localStorage.getItem('locale');
+    const defaultLocale = { key: 'gb', value: 1};
+    const storageLocale = { key: localStorage.getItem('locale'), value: localStorage.getItem('localeValue')};
     const locale = storageLocale || defaultLocale;
 
-    forkJoin([
-      http.get(`/assets/i18n/gb.json`).pipe(
-        catchError(() => of(null))
-      ),
-      http.get(`${translationsUrl}/${locale}${sufix}`).pipe(
-        catchError(() => of(null))
-      )
-    ]).subscribe((response: any[]) => {
-      const devKeys = response[0];
-      const translatedKeys = response[1];
+    const translations = dataBase.list(`/translations`);
+    translations.valueChanges()
+      .subscribe((response: any[]) => {
+          const translatedKeys = response[Number(locale.value)];
+          const key = String(locale.key);
 
-      translate.setTranslation(defaultLocale, devKeys || {});
-      translate.setTranslation(locale, translatedKeys || {}, true);
+          translate.setTranslation(key, translatedKeys || {}, true);
 
-      translate.setDefaultLang(defaultLocale);
-      translate.use(locale);
+          translate.setDefaultLang(defaultLocale.key);
+          translate.use(key);
 
-      resolve(true);
-    });
+          resolve(true);
+        });
+
   });
 }

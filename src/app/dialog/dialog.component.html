@@ -1,0 +1,93 @@
+<div>
+  <div *ngIf="data.dataKey">
+    <h1 mat-dialog-title>{{'BUTTON_CONTINUE' | translate}}</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input matInput [(ngModel)]="phoneNumber">
+      </mat-form-field>
+
+      <div mat-dialog-content>
+        {{'DIALOG' | translate}}
+      </div>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+<!--        &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="id" class="diff">-->
+<!--          <th mat-header-cell *matHeaderCellDef> No. </th>-->
+<!--          <td mat-cell *matCellDef="let element"> {{element.id}} </td>-->
+<!--        </ng-container>-->
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="flavor" class="diff">
+          <th mat-header-cell *matHeaderCellDef> Flavor </th>
+          <td mat-cell *matCellDef="let element"> {{element.flavor}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="bowl" class="diff">
+          <th mat-header-cell *matHeaderCellDef> Bowl </th>
+          <td mat-cell *matCellDef="let element"> {{element.bowl}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="hookah" class="diff">
+          <th mat-header-cell *matHeaderCellDef> Hookah </th>
+          <td mat-cell *matCellDef="let element"> {{element.hookah}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="liquid" class="diff">
+          <th mat-header-cell *matHeaderCellDef> Liquid </th>
+          <td mat-cell *matCellDef="let element"> {{element.liquid}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close cdkFocusInitial (click)="confirmOrder()">{{'BUTTON_CONTINUE' | translate}}</button>
+    </div>
+  </div>
+
+  <div class="swiperStyle" *ngIf="!data.dataKey">
+    <swiper
+      [slidesPerView]="1"
+      [spaceBetween]="10"
+      [navigation]="true"
+      [scrollbar]="{ draggable: true }"
+    >
+      <ng-template swiperSlide *ngFor="let flavor of data.flavors">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>{{flavor | translate}}</mat-card-title>
+            <mat-card-subtitle>{{getFlavorData(flavor, 'BRAND') | translate}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image [src]="getFlavorData(flavor, 'IMAGE', true)" alt="Photo of a Hookah Flavor">
+          <mat-card-content class="text">
+            <p>
+              {{getFlavorData(flavor, 'TEXT', true)}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="selectFlavor(flavor)">{{'BUTTON_SELECT' | translate}}</button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-template>
+       </swiper>
+  </div>
+
+
+</div>

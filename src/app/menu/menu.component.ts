@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   currentLanguage = localStorage.getItem('locale');
-  languages = ['bg', 'rs', 'gb'];
+  languages = ['bg', 'gb', 'rs'];
 
   constructor() { }
 
@@ -16,6 +16,21 @@ export class MenuComponent implements OnInit {
 
   public changeLanguage(code: string) {
     localStorage.setItem('locale', code);
+    let value = 0;
+
+    if (code == 'bg') {
+      value = 0;
+    }
+
+    if (code == 'gb') {
+      value = 1;
+    }
+
+    if (code == 'rs') {
+      value = 2;
+    }
+
+    localStorage.setItem('localeValue', String(value));
     window.location.reload();
   }
 

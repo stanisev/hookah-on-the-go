@@ -1,0 +1,21 @@
+
+@import '~swiper/swiper.min.css';
+@import 'swiper/modules/pagination/pagination.min.css';
+
+.swiperStyle {
+  height: 600px;
+}
+
+.swipeStyleImage {
+  width: 200px;
+  height: 200px;
+}
+
+.text {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.diff {
+  padding: 10px;
+}

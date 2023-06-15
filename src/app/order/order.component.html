@@ -1,0 +1,88 @@
+<div class="background">
+  <div>
+    <ng-container>
+      <app-menu></app-menu>
+    </ng-container>
+    <div class="content">
+      <mat-vertical-stepper [linear]="true" #stepper [animationDuration]="duration">
+        <mat-step [stepControl]="firstFormGroup" [completed]="false">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>{{'OPTION_ONE_CONTENT_DESCRIPTION' | translate}}</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>{{'OPTION_ONE_CONTENT_TITLE' | translate}}</mat-label>
+              <mat-select formControlName="firstCtrl" required>
+                <mat-option *ngFor="let flavor of flavors" [value]="flavor" (click)="selectFlavor(flavor)">
+                  {{flavor | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div>
+              <button mat-raised-button color="primary" matStepperNext>{{'BUTTON_NEXT' | translate}}</button>
+              <button mat-button matStepperNext (click)="openFlavorDialog()">{{'BUTTON_INFO' | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>{{'OPTION_TWO_CONTENT_DESCRIPTION' | translate}}</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>{{'OPTION_TWO_CONTENT_TITLE' | translate}}</mat-label>
+              <mat-select formControlName="secondCtrl" required>
+                <mat-option *ngFor="let bowl of bowls" [value]="bowl" (click)="selectBowl(bowl)">
+                  {{bowl | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>{{'BUTTON_PREVIOUS' | translate}}</button>
+              <button mat-raised-button color="primary" matStepperNext>{{'BUTTON_NEXT' | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="thirdFormGroup">
+          <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>{{'OPTION_THREE_CONTENT_DESCRIPTION' | translate}}</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>{{'OPTION_THREE_CONTENT_TITLE' | translate}}</mat-label>
+              <mat-select formControlName="thirdCtrl" required>
+                <mat-option *ngFor="let hookah of hookahs" [value]="hookah" (click)="selectHookah(hookah)">
+                  {{hookah | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>{{'BUTTON_PREVIOUS' | translate}}</button>
+              <button mat-raised-button color="primary" matStepperNext>{{'BUTTON_NEXT' | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="fourthFormGroup">
+          <form [formGroup]="fourthFormGroup">
+            <ng-template matStepLabel>{{'OPTION_FOUR_CONTENT_DESCRIPTION' | translate}}</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>{{'OPTION_FOUR_CONTENT_TITLE' | translate}}</mat-label>
+              <mat-select formControlName="fourthCtrl" required>
+                <mat-option *ngFor="let liquid of liquids" [value]="liquid" (click)="selectLiquid(liquid)">
+                  {{liquid | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>{{'BUTTON_PREVIOUS' | translate}}</button>
+              <button mat-raised-button color="primary" matStepperNext>{{'BUTTON_NEXT' | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{'BUTTON_CONTINUE' | translate}}</ng-template>
+          You are now done.
+          <div>
+            <button mat-button matStepperPrevious>{{'BUTTON_PREVIOUS' | translate}}</button>
+            <button mat-button color="warn" (click)="stepper.reset()">{{'BUTTON_RESET' | translate}}</button>
+            <button mat-raised-button color="primary" (click)="openDialog('175ms', '175ms')">{{'BUTTON_CONTINUE' | translate}}</button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
+  </div>
+</div>

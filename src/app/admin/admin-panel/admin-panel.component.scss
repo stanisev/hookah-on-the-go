@@ -1,0 +1,44 @@
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.content {
+  margin-top: 25px;
+  width: 400px;
+  height: 800px;
+
+  background-color: white;
+
+  border-radius: 25px;
+  box-shadow: 0 10px 20px rgba(28, 30, 40, 0.2);
+}
+
+.admin-items {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 480px) {
+  #div {
+    top: 50%; /* IMPORTANT */
+    left: 50%; /* IMPORTANT */
+    display: block;
+    position: absolute;
+    width: 750px;
+    height: 417px;
+
+    margin-top: -208.5px; /* HALF OF THE HEIGHT */
+    margin-left: -375px; /* HALF OF THE WIDTH */
+  }
+}

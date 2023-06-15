@@ -1,13 +1,13 @@
 {
   "database": {
-    "rules": "y"
+    "rules": "database.rules"
   },
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "public",
+    "public": "dist/hookah-app",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -1,0 +1,41 @@
+<div class="background">
+  <div class="content">
+    <div class="admin-items">
+      <h1>Admin Panel</h1>
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle >
+          <mat-expansion-panel-header>
+            <mat-panel-title class="justify-center">
+              Add flavor
+              <mat-icon>add</mat-icon>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="justify-center">
+            <mat-form-field appearance="fill">
+              <mat-label>Flavor Brand</mat-label>
+              <input matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Flavor Name</mat-label>
+              <input matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Flavor Description</mat-label>
+              <input matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Flavor Image</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </div>
+          <mat-action-row class="justify-center">
+            <button mat-button color="primary" (click)="nextStep()">Add flavor</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>
